@@ -9,3 +9,5 @@ https://github.com/decentraland/districts/
 
 3. 官网地址 
 https://decentraland.org/cn 
+
+4. 视频https://www.youtube.com/watch?v=gBNfs3r8QsI&feature=youtu.be
