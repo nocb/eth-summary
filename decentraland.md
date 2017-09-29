@@ -1,7 +1,6 @@
 
 
 1.ico  token 地址：
-
 https://etherscan.io/token/Decentraland
 
 
