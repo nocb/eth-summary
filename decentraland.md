@@ -14,3 +14,6 @@ https://decentraland.org/cn
 
 5. 购地注册教程
 http://www.jianshu.com/p/0713c0814bb7
+
+6. 官方reddit
+https://www.reddit.com/r/decentraland/
