@@ -10,3 +10,6 @@ https://my.oschina.net/u/2349981/blog/865256
 
 ### 3.代币创建教程
 http://ethfans.org/topics/118
+
+### 4.使用以太坊智能合约建立代币教程
+http://8btc.com/article-3481-1.html
