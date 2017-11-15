@@ -13,3 +13,6 @@ http://ethfans.org/topics/118
 
 ### 4.使用以太坊智能合约建立代币教程
 http://8btc.com/article-3481-1.html
+
+### 5.简单的ICO众筹合约模版，github源码，
+https://github.com/icodeface/SimpleCrowdSale。
