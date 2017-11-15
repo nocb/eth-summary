@@ -18,3 +18,11 @@ http://8btc.com/article-3481-1.html
 
 ### 5.简单的ICO众筹合约模版，github源码，
 https://github.com/icodeface/SimpleCrowdSale。
+
+
+## 二 开发相关 
+### 1. 开发语言 ：Solidity 
+https://solidity.readthedocs.io/en/develop/ 
+
+### 2. 开发工具ide  Remix
+https://remix.ethereum.org/
