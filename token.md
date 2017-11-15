@@ -7,3 +7,6 @@ https://etherscan.io/tokens
 
 ### 2.私有链搭建操作指南
 https://my.oschina.net/u/2349981/blog/865256
+
+### 3.代币创建教程
+http://ethfans.org/topics/118
