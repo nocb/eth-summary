@@ -4,3 +4,6 @@ token 也叫代币， 一般发行ico 时都会发代币 ，ERC-20 是 Token 的
 
 ### 1.以太坊的token 列表 
 https://etherscan.io/tokens
+
+### 2.私有链搭建操作指南
+https://my.oschina.net/u/2349981/blog/865256
