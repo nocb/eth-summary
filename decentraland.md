@@ -17,3 +17,6 @@ http://www.jianshu.com/p/0713c0814bb7
 
 6. 官方reddit
 https://www.reddit.com/r/decentraland/
+
+7. 编辑器
+https://editor.decentraland.org/
