@@ -6,3 +6,6 @@
 https://token.im/support/questions/How-do-I-get-a-private-key?locale=zh-CN
 
 Keystore 是使用用户自定密码加密过后的私钥
+
+### 地址、密码、私钥、助记词、Keystore 说明
+https://btxiaobai.com/keystore-imtoken.html
