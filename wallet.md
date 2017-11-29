@@ -12,3 +12,10 @@ https://btxiaobai.com/keystore-imtoken.html
 
 ### 私钥 公钥 说明
 https://steemit.com/imtoken/@letitg0o0o0o/imtoken-keystore-and-and
+
+### metamask  
+ 说明：太坊轻钱包MetaMask
+   
+ 网址：https://metamask.io/
+   
+ 教材：https://mp.weixin.qq.com/s?__biz=MjM5NDM0NTE5Mg==&mid=2257483883&idx=1&sn=a7ac83d62f3feca2cfe4ea5991476b69&chksm=a5f3e1ec928468fa8b9ed325f29b89253e639397105a0acc1540a9b5c9fb32583d3708a0d528&scene=21#wechat_redirect
