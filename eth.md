@@ -5,11 +5,21 @@
 
 https://www.gitbook.com/book/easonwang01/blockchain/details
 
-### eth猫源码说明
-http://ethfans.org/posts/how-to-code-your-own-cryptokitties-style-game-on-ethereum
+
 
 ### eth猫 
 https://www.cryptokitties.co/kitty/83194
+
+源码
+https://github.com/axiomzen/cryptokitties-bounty
+
+### eth猫源码说明
+http://ethfans.org/posts/how-to-code-your-own-cryptokitties-style-game-on-ethereum
+
+### 合约反编译
+
+https://github.com/comaeio/porosity
+
 
 ### eth浏览器 
 
