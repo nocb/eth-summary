@@ -20,3 +20,8 @@ https://www.reddit.com/r/decentraland/
 
 7. 编辑器
 https://editor.decentraland.org/
+
+8. 官方文档 
+http://docs.decentraland.org/docs
+
+9.
