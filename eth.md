@@ -41,3 +41,7 @@ https://github.com/gobitfly/etherchain-light
 https://www.ethernodes.org/network/1
 
 https://stats.ethfans.org/     星火计划
+
+###  以太坊状态 到底设置多少 gas price 合适 ，整个以太坊的情况，并给你建议的 gas price。
+
+https://ethgasstation.info/
