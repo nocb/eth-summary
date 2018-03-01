@@ -36,3 +36,8 @@ api调用   https://etherscan.io/apis
 https://github.com/gobitfly/erc20-explorer
 
 https://github.com/gobitfly/etherchain-light
+
+### 以太坊节点状态统计
+https://www.ethernodes.org/network/1
+
+https://stats.ethfans.org/     星火计划
