@@ -11,3 +11,9 @@ http://www.wanbizu.com/baike/201611027974.html
 
 ### 3.比特币的分叉币对比
 http://www.jinse.com/news/bitcoin/95023.html
+
+### 4.比特币白皮书
+https://bitcoin.org/bitcoin.pdf
+
+### 5.比特币官网
+https://bitcoin.org
