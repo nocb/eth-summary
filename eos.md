@@ -5,3 +5,4 @@
 
 - 浏览器 ： https://eosflare.io/
 - 开发指南 http://blog.eosdata.io/
+- eos私钥生成器 https://eos-key.mytokenpocket.vip/
