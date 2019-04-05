@@ -6,3 +6,8 @@
 - 浏览器 ： https://eosflare.io/
 - 开发指南 http://blog.eosdata.io/
 - eos私钥生成器 https://eos-key.mytokenpocket.vip/
+
+- web钱包类似metamask  https://github.com/GetScatter/ScatterWebExtension   
+
+
+- eos开源项目： http://blog.eosdata.io/index.php/eosopensource/
