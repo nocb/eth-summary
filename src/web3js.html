@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web3.js </title>
+
+  <head>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"
+      integrity="sha512-5erpERW8MxcHDF7Xea9eBQPiRtxbse70pFcaHJuOhdEBQeAxGQjUwgJbuBDWve+xP/u5IoJbKjyJk50qCnMD7A=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+
+  <style>
+    body {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background-image: url('https://i.ibb.co/1r9pkW7/bg.webp');
+      background-size: cover;
+      background-position: calc();
+      background-repeat: no-repeat;
+    }
+
+    .address {
+      background: rgba(249, 249, 249, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(5.5px);
+      -webkit-backdrop-filter: blur(5.5px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: white;
+      font-weight: 500;
+    }
+  </style>
+
+<body class="h-full">
+  <div class="
+            flex
+            w-full
+            h-full
+            justify-center
+            content-center
+            items-center
+            space-x-4
+          ">
+    <div class="flex flex-col space-y-6">
+      <h3 class="text-center mt-12 text-blue-400">Interacting with Smart Contract using Web3.js!</h3>
+      <div class="flex justify-center align-middle ">
+        <img src="https://i.ibb.co/GCQXLCN/blockchain.png" alt="blockchain" class="h-1/4 w-1/4">
+      </div>
+      <div class="flex flex-col space-y-2">
+        <button id="ethLogin" onclick="loginWithEth()" class="
+                  rounded
+                  bg-gradient-to-l p-4 from-green-600 to-blue-600 hover:from-blue-700 hover:to-green-700
+                  py-3
+                  px-4
+                  text-white
+                ">
+          Login to see ETH Address
+        </button>
+
+        <div id="userAddress" class="address rounded-2xl shadow shadow-xs p-10 text-gray-700  "></div>
+
+        <button id="logoutButton" onclick="logout()"
+          class="mt-10 hidden text-white p-4 bg-gradient-to-l from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500">
+          Logout
+        </button>
+
+        <button id="getBalance" onclick="getMyBalance()"
+          class="bg-gradient-to-l mt-4 p-4 from-green-600 to-blue-600 hover:from-red-500 hover:to-orange-500 transition ease-in-out delay-150 duration-300  text-white">
+          获取余额
+        </button>
+
+        <button id="aabb" onclick="transfer()"
+          class="bg-gradient-to-l mt-4 p-4 from-green-600 to-blue-600 hover:from-red-500 hover:to-orange-500 transition ease-in-out delay-150 duration-300  text-white">
+          转账0.1eth给：
+        </button>
+
+      </div>
+      <div id="data" class="flex flex-col">
+        <button id="getContractInfo" onclick="getContractSymbol()"
+          class="bg-gradient-to-l p-4 from-green-600 to-blue-600 hover:from-red-500 hover:to-orange-500 transition ease-in-out delay-150 duration-300  text-white">
+          Get Contract Symbol
+        </button>
+        <button id="getContractInfo" onclick="checkOwner()"
+          class="bg-gradient-to-l mt-4 p-4 from-green-600 to-blue-600 hover:from-red-500 hover:to-orange-500 transition ease-in-out delay-150 duration-300  text-white">
+          Get Owner Address
+        </button>
+
+
+      </div>
+      <div class="flex flex-col space-y-2"></div>
+    </div>
+
+
+  </div>
+
+  <script>
+    window.userAddress = null; //Add a userAddress variable to window object 
+
+    //Function that runs just after the page is loaded 
+    window.onload = async () => {
+      if (window.ethereum) { //If user has metamask installed
+        window.web3 = new Web3(window.ethereum); //Creating a Web3 object & adding it to a window variable 
+      } else {
+        alert('You need to install Metamask in order to interact with smart contract');
+      }
+
+      //If the user has already connected metamask then we access the user address from local storage
+      window.userAddress = window.localStorage.getItem("userAddress");
+      document.getElementById('data').classList.add('hidden');
+      showUserAddress();
+    }
+
+    function truncateAddress(address) {
+      if (!address) {
+        return "";
+      }
+      return `${address.substr(0, 7)}...${address.substr(
+        address.length - 5,
+        address.length
+      )}`;
+    }
+
+    function showUserAddress() {
+      if (!window.userAddress) {
+        document.getElementById('userAddress').innerText = "Connect Metamask wallet to see wallet address!";
+        document.getElementById('logoutButton').classList.add('hidden');
+        return false;
+      }
+      else {
+        document.getElementById('userAddress').innerHTML = `ETH wallet adddress: ${truncateAddress(window.userAddress)}`;
+        document.getElementById('logoutButton').classList.remove('hidden');
+        document.getElementById('ethLogin').classList.add('hidden');
+      }
+    }
+
+    function logout() {
+      window.localStorage.removeItem('userAddress');
+      // document.getElementById('ethLogin').classList.remove('hidden');
+      location.reload();
+      // showUserAddress();
+    }
+
+
+    async function getMyBalance() {
+      // 授权获取账户
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      const myAccount = accounts[0];
+      console.log(myAccount, 1);
+      // 返回指定地址账户的余额
+      const balance = await ethereum.request({ method: 'eth_getBalance', params: [myAccount, "latest"], "id": 1 });
+      alert('eth余额:' + web3.utils.hexToNumberString(balance) / 1000000000000000000);
+      console.log(balance, 2)
+    }
+
+    async function transfer() {
+      let value = web3.utils.toWei('0.1', 'ether')
+      var message = { from: '0x8cf03137d798fF2240b814E58B0ED5C82875fc5f', to:'0x80536621033C2Bc5a3813F5be257978331714E3d', value: value };
+      debugger
+      web3.eth.sendTransaction(message, (err, res) => {
+        var output = "";
+        if (!err) {
+          output += res;
+          this.txHash = res
+        } else {
+          output = "Error" + err;
+        }
+
+        console.log('转账:', output)
+      })
+    }
+
+    async function loginWithEth() {
+      if (window.web3) {
+        try {
+          const selectedAccount = await window.ethereum.request({ method: "eth_requestAccounts" })
+            .then((accounts) => accounts[0])
+            .catch(() => {
+              throw error("No account was selected");
+            });
+
+          window.userAddress = selectedAccount;
+          window.localStorage.setItem('userAddress', selectedAccount);
+          showUserAddress();
+          document.getElementById('ethLogin').classList.add('hidden');
+          document.getElementById('data').classList.remove('hidden');
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      else {
+        alert("Metamask wallet was not detected");
+      }
+    }
+
+    async function getContractSymbol() {
+      const CONTRACT_ADDRESS = "0x1A5b30a61CED9B4D9c209E7F1d2fbD38657f8EB1";
+      const contract = new window.web3.eth.Contract(
+        window.ABI,
+        CONTRACT_ADDRESS
+      );
+      const symbol = await contract.methods
+        .symbol()
+        .call({ from: window.userAddress });
+      alert(`Contract ${CONTRACT_ADDRESS} Symbol: ${symbol}`);
+    }
+
+    async function checkOwner() {
+      const CONTRACT_ADDRESS = "0x1A5b30a61CED9B4D9c209E7F1d2fbD38657f8EB1";
+      const contract = new window.web3.eth.Contract(
+        window.ABI,
+        CONTRACT_ADDRESS
+      );
+      const owner = await contract.methods
+        .owner()
+        .call({ from: window.userAddress });
+      alert(`Owner: ${owner}`);
+    }
+
+    window.ABI = [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "_proxyRegistryAddress",
+            type: "address",
+          },
+        ],
+        stateMutability: "nonpayable",
+        type: "constructor",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "AddedToAllowlist",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "owner",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "approved",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "tokenId",
+            type: "uint256",
+          },
+        ],
+        name: "Approval",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "owner",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "operator",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "bool",
+            name: "approved",
+            type: "bool",
+          },
+        ],
+        name: "ApprovalForAll",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: "address",
+            name: "userAddress",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "address payable",
+            name: "relayerAddress",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "bytes",
+            name: "functionSignature",
+            type: "bytes",
+          },
+        ],
+        name: "MetaTransactionExecuted",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "previousOwner",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "newOwner",
+            type: "address",
+          },
+        ],
+        name: "OwnershipTransferred",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "RemovedFromAllowlist",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "from",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "to",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "tokenId",
+            type: "uint256",
+          },
+        ],
+        name: "Transfer",
+        type: "event",
+      },
+      {
+        inputs: [],
+        name: "ERC712_VERSION",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "PRICE",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "RAMPPADDRESS",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "SUPPLYCAP",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "_address", type: "address" },
+        ],
+        name: "addToAllowlist",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
+        ],
+        name: "approve",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "address", name: "owner", type: "address" }],
+        name: "balanceOf",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "baseTokenURI",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "pure",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "contractURI",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "pure",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "disableAllowlistOnlyMode",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "enableAllowlistOnlyMode",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "userAddress", type: "address" },
+          { internalType: "bytes", name: "functionSignature", type: "bytes" },
+          { internalType: "bytes32", name: "sigR", type: "bytes32" },
+          { internalType: "bytes32", name: "sigS", type: "bytes32" },
+          { internalType: "uint8", name: "sigV", type: "uint8" },
+        ],
+        name: "executeMetaTransaction",
+        outputs: [{ internalType: "bytes", name: "", type: "bytes" }],
+        stateMutability: "payable",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+        name: "getApproved",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getChainId",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getDomainSeperator",
+        outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "getNonce",
+        outputs: [{ internalType: "uint256", name: "nonce", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "_address", type: "address" },
+        ],
+        name: "isAllowlisted",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "owner", type: "address" },
+          { internalType: "address", name: "operator", type: "address" },
+        ],
+        name: "isApprovedForAll",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "address", name: "_to", type: "address" }],
+        name: "mintTo",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "address", name: "_to", type: "address" }],
+        name: "mintToAdmin",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "mintingOpen",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "name",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "onlyAllowlistMode",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "openMinting",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "owner",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+        name: "ownerOf",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "payableAddressCount",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        name: "payableAddresses",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        name: "payableFees",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "_address", type: "address" },
+        ],
+        name: "removeFromAllowlist",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "renounceOwnership",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "from", type: "address" },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
+        ],
+        name: "safeTransferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "from", type: "address" },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
+          { internalType: "bytes", name: "_data", type: "bytes" },
+        ],
+        name: "safeTransferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "operator", type: "address" },
+          { internalType: "bool", name: "approved", type: "bool" },
+        ],
+        name: "setApprovalForAll",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "uint256", name: "_feeInWei", type: "uint256" },
+        ],
+        name: "setPrice",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "stopMinting",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "bytes4", name: "interfaceId", type: "bytes4" },
+        ],
+        name: "supportsInterface",
+        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "symbol",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "uint256", name: "_tokenId", type: "uint256" },
+        ],
+        name: "tokenURI",
+        outputs: [{ internalType: "string", name: "", type: "string" }],
+        stateMutability: "pure",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "from", type: "address" },
+          { internalType: "address", name: "to", type: "address" },
+          { internalType: "uint256", name: "tokenId", type: "uint256" },
+        ],
+        name: "transferFrom",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          { internalType: "address", name: "newOwner", type: "address" },
+        ],
+        name: "transferOwnership",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "withdrawAll",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "withdrawAllRampp",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+    ];
+
+  </script>
+</body>
+
+</html>
