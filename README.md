@@ -4,8 +4,16 @@
 
 ## 目录
 
+- [以太坊](#Ethereum)
 - [Defi](#Defi)
 - [跨链桥](#Bridge)
+- [质押](#Staking)
+
+
+## Ethereum 以太坊
+
+- [EVM 图谱](https://learnblockchain.cn/maps/EVM) 以太坊总的技术图 
+- [L1与L2之间的关系和说明](https://learnblockchain.cn/article/7995) L2是为了扩容，L1为L2保证去中心化和安全性，L2需要把数据打包Rollup提交到L1，L2的数据可以在L1 做验证。
 
 
 ## Defi 开放式金融
@@ -18,3 +26,8 @@
 	- [Layer2跨链桥战争：Orbiter VS Layerswap](https://www.panewslab.com/zh/articledetails/saje03tb.html) - 
     - [Layerswap 使用方法说明](https://jiamigou.gitbook.io/jiamigou/kong-tou-jiao-cheng/jia-mi-gou-kong-tou-ban-zhuan-di-28-pian-layer-2-ling-yu-layerswap-de-kong-tou-jiao-cheng) 
 - [Layerzero](https://layerzero.network/) Layerzero L2层之间的跨链很方便，便宜
+
+
+## Staking 质押
+
+- [ETH家庭质押指南](https://stakesaurus.gitbook.io/eth-home-staking-guide) 
