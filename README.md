@@ -10,6 +10,7 @@
 - [Staking 质押](#Staking)
 - [其他链](#其他链)
 - [加密投资机构](#Investor) 
+- [其他报告](#其他报告)
 
 
 ## Ethereum
@@ -46,3 +47,8 @@
 ## Investor
 
 - [Paradigm](https://m.itjuzi.com/investfirm/8619) - 成立于2018年，是一家专注于区块链、数字货币、加密货币的投资机构
+- [a16z]
+
+## 其他报告
+
+    - [web3 开发人员报告](https://www.developerreport.com/) 
